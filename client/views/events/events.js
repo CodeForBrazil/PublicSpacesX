@@ -80,7 +80,8 @@ Template.events.events({
 
     var userId = Meteor.userId();
     if (userId) {
-    	Router.go('/events/' + event_id);
+    	location.href = '/events/' + event_id;
+//    	Router.go('/events/' + event_id);
     }
   },
   
