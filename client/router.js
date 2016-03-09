@@ -29,13 +29,20 @@ Router.route("/events/now/:event_id?", {
   },
   action : function () {
 	  if (this.params && this.params.event_id) {
-		  event = Events.findOne({_id: this.params.event_id});
-		  $("meta[property='og:title']").attr("content", event.name);
-		  if (event.description)
-			  $("meta[property='og:description']").attr("content", event.description);
-		  if (Iron.Location.get() && Iron.Location.get().href) {
-			  $("meta[property='og:url']").attr("content", Iron.Location.get().href);
-			  $("meta[property='og:image']").attr("content", Iron.Location.get().rootUrl+"/img/logo.png");
+
+		  evt = Events.findOne({_id: this.params.event_id});
+
+		  if (evt) {
+		  	  console.log("Event " + this.params.event_id + " found");
+			  $("meta[property='og:title']").attr("content", evt.name);
+			  if (evt.description)
+				  $("meta[property='og:description']").attr("content", evt.description);
+			  if (Iron.Location.get() && Iron.Location.get().href) {
+				  $("meta[property='og:url']").attr("content", Iron.Location.get().href);
+				  $("meta[property='og:image']").attr("content", Iron.Location.get().rootUrl+"/img/logo.png");
+			  }
+		  } else {
+		  	console.log("Event " + this.params.event_id + " not found");
 		  }
 	  }
 	  this.render();
