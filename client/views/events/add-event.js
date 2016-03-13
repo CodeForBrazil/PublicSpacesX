@@ -204,6 +204,22 @@ Template.addForm.events({
 		e.target.requirements.value = "";
 	},
 
+	"click .btn-remove": function(e){
+
+		var saved_event = getEvent();
+		if (confirm('Tem certeza que deseja remover o evento "' + saved_event.name + '"?')) {
+		    var userId = Meteor.userId();
+		    if (userId && userId == saved_event.owner) {
+		    	rm_resp = Events.remove({
+					_id: saved_event._id});
+		    	console.log(rm_resp);
+		    }
+		    Router.go('/events/now');
+		    return true;
+	    }
+		return false;
+	},
+	    
 	'change .form-control': function(e) {
 		console.log("form changed");
 		if ($(e.target).prop('id') == "selectPlace") { //Place selector changed, center pin in the map 
